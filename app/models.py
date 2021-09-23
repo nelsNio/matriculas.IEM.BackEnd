@@ -20,15 +20,23 @@ class Estudiante(Base):
     numero_documento = Column(Integer, index=True, unique=True)
     contrasenia= Column(String, index=False,nullable=False)
     e_mail= Column(String, index=False,nullable=False)
+    matricula = relationship("Matricula", back_populates="estudiante")
+
+
 
 
 
 class Matricula(Base):
     __tablename__ = "matricula"
     id = Column(Integer, primary_key=True, index=True)
+    
     estudiante_id= Column(Integer, ForeignKey("estudiantes.id"))
-    curso_id= Column(Integer, ForeignKey("cursos.id"))
+    estudiante= relationship("Estudiante", back_populates="matricula")
 
+    curso_id= Column(Integer, ForeignKey("cursos.id"))
+    curso = relationship("Curso", back_populates="matricula")
+
+    
 
 class Curso(Base):
     __tablename__ = "cursos"
@@ -36,5 +44,7 @@ class Curso(Base):
     numero = Column(Numeric, index=False,nullable=False)
     letra = Column(String, index=False,nullable=False)
     alias = Column(String, index=False,nullable=False)
+    matricula = relationship("Matricula", back_populates="curso")
+
 
  

@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from . import crud_estudiante as estu, models, schemas
 from . import crud_curso  as curs
+from . import crud_matricula  as matr
 from .database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
@@ -74,12 +75,11 @@ def read_estudiantes(skip: int = 0, limit: int = 100, db: Session = Depends(get_
 
 @app.post("/api/v1/cursos/", response_model=schemas.Curso)
 def create_curso(curso: schemas.CursoCreate, db: Session = Depends(get_db)):
-    print(curso)
     db_curso= curs.get_curso_letra_numero(db,curso.letra,curso.numero)
     if db_curso is None:
         return curs.create_curso(db=db, curso=curso)
     else:
-        raise HTTPException(status_code=404, detail="Curso ya está registrado!")
+        raise HTTPException(status_code=300, detail="Curso ya está registrado!")
 
 
 
@@ -95,3 +95,22 @@ def read_cursos(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     cursos = curs.get_cursos(db, skip=skip, limit=limit)
     return cursos
 
+
+##---- matriculas
+
+@app.post("/api/v1/matriculas/", response_model=schemas.Matricula)
+def create_matricula(matricula: schemas.MatriculaCreate, db: Session = Depends(get_db)):
+    return matr.create_matricula(db=db, matricula=matricula)
+
+
+@app.get("/api/v1/matriculas/{matricula_id}", response_model=schemas.Matricula)
+def read_matricula(matricula_id: int, db: Session = Depends(get_db)):
+    db_matricula = matr.get_matricula(db, matricula_id=matricula_id)
+    if db_matricula is None:
+        raise HTTPException(status_code=404, detail="Matricula no encontrado!")
+    return db_matricula
+
+@app.get("/api/v1/matriculas/", response_model=List[schemas.Matricula])
+def read_matriculas(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    matriculas = matr.get_matriculas(db, skip=skip, limit=limit)
+    return matriculas

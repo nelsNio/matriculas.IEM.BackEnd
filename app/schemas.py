@@ -32,7 +32,7 @@ class Estudiante(EstudianteBase):
 
 
 
-#---- ESQUEMA ESTUDIANTE
+#---- ESQUEMA Curso
 class CursoBase(BaseModel):
     numero:int
     letra:str
@@ -45,6 +45,28 @@ class CursoCreate(CursoBase):
 
 class Curso(CursoBase):
     id: int
+
+    class Config:
+        orm_mode = True
+
+
+#---- ESQUEMA Matricula
+class MatriculaBase(BaseModel):
+    pass
+
+class MatriculaCreate(MatriculaBase):
+
+    estudiante_id: int
+    curso_id: int
+
+
+class Matricula(MatriculaBase):
+    id: int
+    estudiante_id: int
+    curso_id: int
+    estudiante: Estudiante
+    curso: Curso 
+
 
     class Config:
         orm_mode = True
