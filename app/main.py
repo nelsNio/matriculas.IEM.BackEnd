@@ -7,6 +7,8 @@ from . import crud_estudiante as estu, models, schemas
 from . import crud_curso  as curs
 from . import crud_matricula  as matr
 from .database import SessionLocal, engine
+from fastapi.middleware.cors import CORSMiddleware
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -21,6 +23,16 @@ def get_db():
     finally:
         db.close()
 
+origins = ['*'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/api/v1/estudiantes/", response_model=schemas.Estudiante)
 def create_estudiante(estudiante: schemas.EstudianteCreate, db: Session = Depends(get_db)):
