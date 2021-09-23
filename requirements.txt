@@ -2,7 +2,6 @@ asgiref==3.4.1
 async-exit-stack==1.0.1
 async-generator==1.10
 click==8.0.1
-dataclasses==0.8
 fastapi==0.68.1
 greenlet==1.1.1
 h11==0.12.0
