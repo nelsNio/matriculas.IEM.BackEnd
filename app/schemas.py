@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-
+#---- ESQUEMA ESTUDIANTE
 class EstudianteBase(BaseModel):
     primer_nombre : str
     segundo_nombre : str
@@ -25,6 +25,25 @@ class EstudianteCreate(EstudianteBase):
 
 
 class Estudiante(EstudianteBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+
+#---- ESQUEMA ESTUDIANTE
+class CursoBase(BaseModel):
+    numero:int
+    letra:str
+    alias:str
+
+
+class CursoCreate(CursoBase):
+    pass
+
+
+class Curso(CursoBase):
     id: int
 
     class Config:

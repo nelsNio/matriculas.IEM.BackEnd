@@ -1,6 +1,8 @@
 from datetime import datetime
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String,Date,Enum
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.sqltypes import Numeric
+
 
 from .database import Base
 
@@ -19,3 +21,20 @@ class Estudiante(Base):
     contrasenia= Column(String, index=False,nullable=False)
     e_mail= Column(String, index=False,nullable=False)
 
+
+
+class Matricula(Base):
+    __tablename__ = "matricula"
+    id = Column(Integer, primary_key=True, index=True)
+    estudiante_id= Column(Integer, ForeignKey("estudiantes.id"))
+    curso_id= Column(Integer, ForeignKey("cursos.id"))
+
+
+class Curso(Base):
+    __tablename__ = "cursos"
+    id = Column(Integer, primary_key=True, index=True)
+    numero = Column(Numeric, index=False,nullable=False)
+    letra = Column(String, index=False,nullable=False)
+    alias = Column(String, index=False,nullable=False)
+
+ 
