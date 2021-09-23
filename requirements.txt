@@ -4,11 +4,10 @@ async-generator==1.10
 click==8.0.1
 fastapi==0.68.1
 greenlet==1.1.1
-psycopg2==2.7.5
-psycopg2-binary==2.7.5
+psycopg2
+psycopg2-binary
 pydantic==1.8.2
 SQLAlchemy==1.4.24
 starlette==0.14.2
 typing-extensions==3.10.0.2
 uvicorn==0.15.0
-zipp==3.5.0
