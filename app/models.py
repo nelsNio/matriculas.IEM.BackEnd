@@ -16,4 +16,6 @@ class Estudiante(Base):
     segundo_apellido= Column(String, index=False,nullable=False)
     documento_identidad = Column(Enum('CC','TI',name='tipos_documentos'), index=False)
     numero_documento = Column(Integer, index=True, unique=True)
+    contrasenia= Column(String, index=False,nullable=False)
+    e_mail= Column(String, index=False,nullable=False)
 

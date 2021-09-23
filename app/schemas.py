@@ -12,8 +12,12 @@ class EstudianteBase(BaseModel):
     documento_identidad : str
     numero_documento : int
     fecha_insercion:date=datetime.now()
+    contrasenia:str
+    e_mail:str
 
-
+class EstudianteLogin(BaseModel):
+    contrasenia:str
+    e_mail:str
 
 
 class EstudianteCreate(EstudianteBase):

@@ -34,11 +34,18 @@ def read_estudiante(estudiante_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Estudiante not found")
     return db_estudiante
 
+@app.post("/api/v1/estudiantes/login", response_model=schemas.Estudiante)
+def login(credenciales: schemas.EstudianteLogin, db: Session = Depends(get_db)):
+    db_estudiante = crud.login(db, credenciales= credenciales)
+    if db_estudiante is None:
+        raise HTTPException(status_code=404, detail="Estudiante no encontrado, validar credenciales!")
+    return db_estudiante
+
 @app.put("/api/v1/estudiantes/{estudiante_id}", response_model=schemas.Estudiante)
 def put_estudiante(estudiante_id: int,estudiante: schemas.EstudianteCreate, db:Session = Depends(get_db)):
     db_estudiante = crud.get_estudiante(db, estudiante_id=estudiante_id)
     if db_estudiante is None:
-        raise HTTPException(status_code=404, detail="Estudiante not found")
+        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
     else:
         db_estudiante=crud.put_estudiante(db,estudiante_id=estudiante_id,estudiante=estudiante)
     return db_estudiante
