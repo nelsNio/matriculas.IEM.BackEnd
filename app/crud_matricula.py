@@ -9,7 +9,9 @@ from . import models, schemas
 def get_matricula(db: Session, matricula_id: int):
     return db.query(Matricula).filter(Matricula.id == matricula_id).first()
 
-
+def read_estudiante_matriculas(db: Session, estudiante_id: int):
+    print(estudiante_id)
+    return db.query(Matricula).filter(Matricula.estudiante_id == estudiante_id).all()
 
 
 def delete_matricula(db: Session, matricula_id: int):

@@ -122,6 +122,14 @@ def read_matricula(matricula_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Matricula no encontrado!")
     return db_matricula
 
+@app.get("/api/v1/estudiantes/{estudiante_id}/matriculas", response_model=List[schemas.Matricula])
+def read_estudiante_matriculas(estudiante_id: int, db: Session = Depends(get_db)):
+    db_matricula = matr.read_estudiante_matriculas(db, estudiante_id=estudiante_id)
+    if db_matricula is None:
+        raise HTTPException(status_code=404, detail="Matricula no encontrado!")
+    return db_matricula
+
+
 @app.get("/api/v1/matriculas/", response_model=List[schemas.Matricula])
 def read_matriculas(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     matriculas = matr.get_matriculas(db, skip=skip, limit=limit)

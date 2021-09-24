@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.expression import true
-from .models import Estudiante
+from .models import Estudiante, Matricula
 
 
 
